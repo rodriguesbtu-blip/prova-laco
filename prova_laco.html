@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Prova de Laço – Recanto dos Ipês</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,sans-serif;background:#f0f4f0;min-height:100vh}
+
+header{background:#1e5c1a;color:#fff;padding:16px;text-align:center}
+header h1{font-size:17px;font-weight:700;margin-bottom:2px}
+header p{font-size:12px;opacity:.8}
+
+.total-bar{background:#2e7d2a;color:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+.total-bar span{font-size:13px;opacity:.9}
+.total-bar strong{font-size:22px;font-weight:700}
+
+.form-card{background:#fff;margin:12px;border-radius:12px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.form-card h2{font-size:13px;color:#1e5c1a;font-weight:700;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px}
+
+.field{margin-bottom:10px}
+.field label{display:block;font-size:12px;color:#666;margin-bottom:4px;font-weight:600}
+.field input,.field select{width:100%;padding:11px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:15px;color:#222;background:#fff;-webkit-appearance:none;appearance:none}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.field input:focus,.field select:focus{outline:none;border-color:#2e7d2a}
+
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.btn-add{width:100%;background:#1e5c1a;color:#fff;border:none;border-radius:10px;padding:14px;font-size:16px;font-weight:700;margin-top:4px;cursor:pointer;letter-spacing:.3px}
+.btn-add:active{background:#155216;transform:scale(.98)}
+
+.section-title{padding:4px 16px 6px;font-size:12px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+
+.item-card{background:#fff;margin:0 12px 8px;border-radius:10px;padding:13px 14px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;align-items:center;gap:10px}
+.item-info{flex:1;min-width:0}
+.item-desc{font-size:14px;font-weight:600;color:#222;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item-cat{font-size:11px;color:#888;margin-top:2px}
+.item-val{font-size:15px;font-weight:700;color:#1e5c1a;white-space:nowrap}
+.item-sub{font-size:10px;color:#aaa;text-align:right;margin-top:1px}
+.btn-del{background:none;border:none;color:#e53935;font-size:20px;padding:4px 6px;cursor:pointer;line-height:1;flex-shrink:0}
+
+.empty{text-align:center;padding:32px 16px;color:#aaa;font-size:14px}
+
+.resumo-card{background:#fff;margin:12px;border-radius:12px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.resumo-card h2{font-size:13px;color:#1e5c1a;font-weight:700;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px}
+.resumo-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
+.resumo-row:last-child{border:none}
+.resumo-cat{color:#444}
+.resumo-val{font-weight:600;color:#1e5c1a}
+.resumo-bar-wrap{flex:1;margin:0 10px;height:4px;background:#e8f5e9;border-radius:2px;overflow:hidden}
+.resumo-bar{height:100%;background:#2e7d2a;border-radius:2px;transition:width .3s}
+
+.btn-limpar{width:calc(100% - 24px);margin:0 12px 16px;background:none;border:1.5px solid #e53935;color:#e53935;border-radius:10px;padding:12px;font-size:14px;font-weight:600;cursor:pointer}
+.btn-limpar:active{background:#fdecea}
+
+.tabs{display:flex;background:#1e5c1a;padding:0 12px}
+.tab{flex:1;background:none;border:none;color:rgba(255,255,255,.6);font-size:13px;font-weight:600;padding:10px 0;cursor:pointer;border-bottom:3px solid transparent;transition:.2s}
+.tab.active{color:#fff;border-bottom-color:#fff}
+
+.page{display:none}.page.active{display:block}
+.pb{height:24px}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🤠 Recanto dos Ipês</h1>
+  <p>Controle de Gastos – Prova de Laço</p>
+</header>
+
+<div class="total-bar">
+  <span>TOTAL GASTO</span>
+  <strong id="total-geral">R$ 0,00</strong>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showPage('lancamentos')">Lançamentos</button>
+  <button class="tab" onclick="showPage('resumo')">Resumo</button>
+</div>
+
+<!-- PÁGINA LANÇAMENTOS -->
+<div id="page-lancamentos" class="page active">
+
+  <div class="form-card">
+    <h2>Novo Gasto</h2>
+    <div class="field">
+      <label>Descrição</label>
+      <input type="text" id="desc" placeholder="Ex: Inscrição, gasolina..." autocomplete="off">
+    </div>
+    <div class="field">
+      <label>Categoria</label>
+      <select id="cat">
+        <option value="">Selecione...</option>
+        <option>Inscrição / Taxa</option>
+        <option>Combustível</option>
+        <option>Alimentação</option>
+        <option>Hospedagem</option>
+        <option>Ferragens / Equipamentos</option>
+        <option>Veterinário / Saúde Animal</option>
+        <option>Transporte / Frete</option>
+        <option>Uniforme / Vestuário</option>
+        <option>Premiação / Troféu</option>
+        <option>Outros</option>
+      </select>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label>Quantidade</label>
+        <input type="number" id="qtd" value="1" min="1" inputmode="numeric">
+      </div>
+      <div class="field">
+        <label>Valor Unit. (R$)</label>
+        <input type="number" id="valor" placeholder="0,00" inputmode="decimal" step="0.01">
+      </div>
+    </div>
+    <button class="btn-add" onclick="addItem()">+ Adicionar</button>
+  </div>
+
+  <div class="section-title">LANÇAMENTOS</div>
+  <div id="lista"><div class="empty">Nenhum gasto lançado ainda</div></div>
+
+  <button class="btn-limpar" onclick="limparTudo()">🗑 Limpar tudo</button>
+  <div class="pb"></div>
+</div>
+
+<!-- PÁGINA RESUMO -->
+<div id="page-resumo" class="page">
+  <div class="resumo-card">
+    <h2>Por Categoria</h2>
+    <div id="resumo-lista"><div class="empty">Nenhum gasto ainda</div></div>
+  </div>
+  <div class="pb"></div>
+</div>
+
+<script>
+var KEY = 'laco_gastos';
+var gastos = JSON.parse(localStorage.getItem(KEY) || '[]');
+
+function fmt(v){return 'R$ '+v.toFixed(2).replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,'.')}
+
+function save(){localStorage.setItem(KEY,JSON.stringify(gastos))}
+
+function totalGeral(){return gastos.reduce(function(s,g){return s+g.qtd*g.valor},0)}
+
+function render(){
+  var lista = document.getElementById('lista');
+  if(gastos.length===0){lista.innerHTML='<div class="empty">Nenhum gasto lançado ainda</div>';document.getElementById('total-geral').textContent='R$ 0,00';renderResumo();return}
+  var html='';
+  for(var i=gastos.length-1;i>=0;i--){
+    var g=gastos[i];
+    var tot=g.qtd*g.valor;
+    html+='<div class="item-card">'
+      +'<div class="item-info">'
+      +'<div class="item-desc">'+esc(g.desc)+'</div>'
+      +'<div class="item-cat">'+esc(g.cat)+(g.qtd>1?' · '+g.qtd+'x '+fmt(g.valor):'')+'</div>'
+      +'</div>'
+      +'<div>'
+      +'<div class="item-val">'+fmt(tot)+'</div>'
+      +'</div>'
+      +'<button class="btn-del" onclick="del('+i+')">×</button>'
+      +'</div>';
+  }
+  lista.innerHTML=html;
+  document.getElementById('total-geral').textContent=fmt(totalGeral());
+  renderResumo();
+}
+
+function renderResumo(){
+  var el=document.getElementById('resumo-lista');
+  if(gastos.length===0){el.innerHTML='<div class="empty">Nenhum gasto ainda</div>';return}
+  var map={};
+  gastos.forEach(function(g){var c=g.cat||'Outros';map[c]=(map[c]||0)+g.qtd*g.valor});
+  var total=totalGeral();
+  var cats=Object.keys(map).sort(function(a,b){return map[b]-map[a]});
+  var html='';
+  cats.forEach(function(c){
+    var pct=total>0?map[c]/total*100:0;
+    html+='<div class="resumo-row">'
+      +'<span class="resumo-cat">'+esc(c)+'</span>'
+      +'<div class="resumo-bar-wrap"><div class="resumo-bar" style="width:'+pct.toFixed(1)+'%"></div></div>'
+      +'<span class="resumo-val">'+fmt(map[c])+'</span>'
+      +'</div>';
+  });
+  el.innerHTML=html;
+}
+
+function addItem(){
+  var desc=document.getElementById('desc').value.trim();
+  var cat=document.getElementById('cat').value;
+  var qtd=parseFloat(document.getElementById('qtd').value)||1;
+  var valor=parseFloat(document.getElementById('valor').value);
+  if(!desc){alert('Informe a descrição!');return}
+  if(!cat){alert('Selecione a categoria!');return}
+  if(!valor||valor<=0){alert('Informe o valor!');return}
+  gastos.push({desc:desc,cat:cat,qtd:qtd,valor:valor,dt:new Date().toLocaleDateString('pt-BR')});
+  save();
+  document.getElementById('desc').value='';
+  document.getElementById('valor').value='';
+  document.getElementById('qtd').value='1';
+  document.getElementById('cat').value='';
+  render();
+}
+
+function del(i){
+  if(confirm('Remover este item?')){gastos.splice(i,1);save();render()}
+}
+
+function limparTudo(){
+  if(confirm('Apagar TODOS os lançamentos?')){gastos=[];save();render()}
+}
+
+function showPage(p){
+  document.querySelectorAll('.page').forEach(function(el){el.classList.remove('active')});
+  document.querySelectorAll('.tab').forEach(function(el){el.classList.remove('active')});
+  document.getElementById('page-'+p).classList.add('active');
+  event.target.classList.add('active');
+  if(p==='resumo')renderResumo();
+}
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+render();
+</script>
+</body>
+</html>
