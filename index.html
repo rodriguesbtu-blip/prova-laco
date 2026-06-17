@@ -3,62 +3,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Prova de Laço – Recanto dos Ipês</title>
+<title>Recanto dos Ipês – Prova de Laço</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:-apple-system,sans-serif;background:#f0f4f0;min-height:100vh}
 
-header{background:#1e5c1a;color:#fff;padding:16px;text-align:center}
-header h1{font-size:17px;font-weight:700;margin-bottom:2px}
-header p{font-size:12px;opacity:.8}
+header{background:#1e5c1a;color:#fff;padding:14px 16px;text-align:center}
+header h1{font-size:16px;font-weight:700}
+header p{font-size:11px;opacity:.8;margin-top:2px}
 
-.total-bar{background:#2e7d2a;color:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
-.total-bar span{font-size:13px;opacity:.9}
-.total-bar strong{font-size:22px;font-weight:700}
+/* RESULTADO BAR */
+.result-bar{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+.result-bar.lucro{background:#1b5e20}
+.result-bar.prejuizo{background:#b71c1c}
+.rb-col{text-align:center}
+.rb-label{font-size:10px;color:rgba(255,255,255,.8);text-transform:uppercase;letter-spacing:.4px}
+.rb-val{font-size:16px;font-weight:700;color:#fff}
+.rb-center{font-size:12px;font-weight:700;color:#fff;text-align:center;padding:4px 10px;background:rgba(255,255,255,.2);border-radius:20px}
 
-.form-card{background:#fff;margin:12px;border-radius:12px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.1)}
-.form-card h2{font-size:13px;color:#1e5c1a;font-weight:700;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px}
-
-.field{margin-bottom:10px}
-.field label{display:block;font-size:12px;color:#666;margin-bottom:4px;font-weight:600}
-.field input,.field select{width:100%;padding:11px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:15px;color:#222;background:#fff;-webkit-appearance:none;appearance:none}
-.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
-.field input:focus,.field select:focus{outline:none;border-color:#2e7d2a}
-
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-
-.btn-add{width:100%;background:#1e5c1a;color:#fff;border:none;border-radius:10px;padding:14px;font-size:16px;font-weight:700;margin-top:4px;cursor:pointer;letter-spacing:.3px}
-.btn-add:active{background:#155216;transform:scale(.98)}
-
-.section-title{padding:4px 16px 6px;font-size:12px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
-
-.item-card{background:#fff;margin:0 12px 8px;border-radius:10px;padding:13px 14px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;align-items:center;gap:10px}
-.item-info{flex:1;min-width:0}
-.item-desc{font-size:14px;font-weight:600;color:#222;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.item-cat{font-size:11px;color:#888;margin-top:2px}
-.item-val{font-size:15px;font-weight:700;color:#1e5c1a;white-space:nowrap}
-.item-sub{font-size:10px;color:#aaa;text-align:right;margin-top:1px}
-.btn-del{background:none;border:none;color:#e53935;font-size:20px;padding:4px 6px;cursor:pointer;line-height:1;flex-shrink:0}
-
-.empty{text-align:center;padding:32px 16px;color:#aaa;font-size:14px}
-
-.resumo-card{background:#fff;margin:12px;border-radius:12px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.1)}
-.resumo-card h2{font-size:13px;color:#1e5c1a;font-weight:700;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px}
-.resumo-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
-.resumo-row:last-child{border:none}
-.resumo-cat{color:#444}
-.resumo-val{font-weight:600;color:#1e5c1a}
-.resumo-bar-wrap{flex:1;margin:0 10px;height:4px;background:#e8f5e9;border-radius:2px;overflow:hidden}
-.resumo-bar{height:100%;background:#2e7d2a;border-radius:2px;transition:width .3s}
-
-.btn-limpar{width:calc(100% - 24px);margin:0 12px 16px;background:none;border:1.5px solid #e53935;color:#e53935;border-radius:10px;padding:12px;font-size:14px;font-weight:600;cursor:pointer}
-.btn-limpar:active{background:#fdecea}
-
-.tabs{display:flex;background:#1e5c1a;padding:0 12px}
-.tab{flex:1;background:none;border:none;color:rgba(255,255,255,.6);font-size:13px;font-weight:600;padding:10px 0;cursor:pointer;border-bottom:3px solid transparent;transition:.2s}
+/* TABS */
+.tabs{display:flex;background:#1e5c1a}
+.tab{flex:1;background:none;border:none;color:rgba(255,255,255,.55);font-size:12px;font-weight:600;padding:9px 0;cursor:pointer;border-bottom:3px solid transparent}
 .tab.active{color:#fff;border-bottom-color:#fff}
 
 .page{display:none}.page.active{display:block}
+
+/* CARDS */
+.form-card{background:#fff;margin:12px;border-radius:12px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.form-card h2{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.form-card.entrada h2{color:#2e7d2a}
+.form-card.saida h2{color:#c62828}
+
+.field{margin-bottom:10px}
+.field label{display:block;font-size:11px;color:#666;margin-bottom:4px;font-weight:600}
+.field input,.field select{width:100%;padding:11px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:15px;color:#222;background:#fff;-webkit-appearance:none}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.field input:focus,.field select:focus{outline:none}
+.field input.entrada:focus{border-color:#2e7d2a}
+.field input.saida:focus{border-color:#c62828}
+
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.btn-entrada{width:100%;background:#1e5c1a;color:#fff;border:none;border-radius:10px;padding:13px;font-size:15px;font-weight:700;margin-top:4px;cursor:pointer}
+.btn-entrada:active{background:#155216}
+.btn-saida{width:100%;background:#c62828;color:#fff;border:none;border-radius:10px;padding:13px;font-size:15px;font-weight:700;margin-top:4px;cursor:pointer}
+.btn-saida:active{background:#991b1b}
+
+.section-title{padding:4px 16px 6px;font-size:11px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+
+/* ITENS */
+.item-card{background:#fff;margin:0 12px 8px;border-radius:10px;padding:12px 14px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;align-items:center;gap:10px}
+.item-stripe{width:4px;height:40px;border-radius:2px;flex-shrink:0}
+.item-stripe.e{background:#2e7d2a}
+.item-stripe.s{background:#c62828}
+.item-info{flex:1;min-width:0}
+.item-desc{font-size:13px;font-weight:600;color:#222;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item-cat{font-size:11px;color:#888;margin-top:2px}
+.item-val{font-size:15px;font-weight:700;white-space:nowrap}
+.item-val.e{color:#2e7d2a}
+.item-val.s{color:#c62828}
+.item-sub{font-size:10px;color:#aaa;text-align:right;margin-top:1px}
+.btn-del{background:none;border:none;color:#bbb;font-size:20px;padding:4px 6px;cursor:pointer;line-height:1;flex-shrink:0}
+
+.empty{text-align:center;padding:28px 16px;color:#aaa;font-size:13px}
+
+/* RESUMO */
+.resumo-card{background:#fff;margin:12px;border-radius:12px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.resumo-card h2{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.resumo-card.entrada h2{color:#2e7d2a}
+.resumo-card.saida h2{color:#c62828}
+
+.resumo-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
+.resumo-row:last-child{border:none}
+.resumo-cat{color:#444;flex:1}
+.resumo-bar-wrap{width:60px;height:4px;background:#f0f0f0;border-radius:2px;margin:0 8px;overflow:hidden}
+.resumo-bar-e{height:100%;background:#2e7d2a;border-radius:2px}
+.resumo-bar-s{height:100%;background:#c62828;border-radius:2px}
+.resumo-val{font-weight:600;min-width:70px;text-align:right}
+.resumo-val.e{color:#2e7d2a}
+.resumo-val.s{color:#c62828}
+
+.resultado-box{margin:12px;border-radius:12px;padding:20px;text-align:center}
+.resultado-box.lucro{background:#e8f5e9;border:2px solid #2e7d2a}
+.resultado-box.prejuizo{background:#ffebee;border:2px solid #c62828}
+.resultado-box h3{font-size:13px;font-weight:700;text-transform:uppercase;margin-bottom:6px}
+.resultado-box h3.l{color:#2e7d2a}
+.resultado-box h3.p{color:#c62828}
+.resultado-box .valor-grande{font-size:28px;font-weight:700}
+.resultado-box .valor-grande.l{color:#1b5e20}
+.resultado-box .valor-grande.p{color:#b71c1c}
+
+.btn-limpar{width:calc(100% - 24px);margin:0 12px 16px;background:none;border:1.5px solid #ccc;color:#999;border-radius:10px;padding:11px;font-size:13px;font-weight:600;cursor:pointer}
 .pb{height:24px}
 </style>
 </head>
@@ -66,36 +101,85 @@ header p{font-size:12px;opacity:.8}
 
 <header>
   <h1>🤠 Recanto dos Ipês</h1>
-  <p>Controle de Gastos – Prova de Laço</p>
+  <p>Prova de Laço – Controle Financeiro</p>
 </header>
 
-<div class="total-bar">
-  <span>TOTAL GASTO</span>
-  <strong id="total-geral">R$ 0,00</strong>
+<div class="result-bar lucro" id="result-bar">
+  <div class="rb-col">
+    <div class="rb-label">Entradas</div>
+    <div class="rb-val" id="total-entrada">R$ 0,00</div>
+  </div>
+  <div class="rb-center" id="resultado-label">EQUILÍBRIO</div>
+  <div class="rb-col">
+    <div class="rb-label">Saídas</div>
+    <div class="rb-val" id="total-saida">R$ 0,00</div>
+  </div>
 </div>
 
 <div class="tabs">
-  <button class="tab active" onclick="showPage('lancamentos')">Lançamentos</button>
-  <button class="tab" onclick="showPage('resumo')">Resumo</button>
+  <button class="tab active" onclick="showPage('entradas',this)">💰 Entradas</button>
+  <button class="tab" onclick="showPage('saidas',this)">💸 Saídas</button>
+  <button class="tab" onclick="showPage('resumo',this)">📊 Resumo</button>
 </div>
 
-<!-- PÁGINA LANÇAMENTOS -->
-<div id="page-lancamentos" class="page active">
-
-  <div class="form-card">
-    <h2>Novo Gasto</h2>
+<!-- ENTRADAS -->
+<div id="page-entradas" class="page active">
+  <div class="form-card entrada">
+    <h2>➕ Nova Entrada</h2>
     <div class="field">
       <label>Descrição</label>
-      <input type="text" id="desc" placeholder="Ex: Inscrição, gasolina..." autocomplete="off">
+      <input type="text" id="e-desc" placeholder="Ex: Patrocínio Fulano, Cerveja..." class="entrada" autocomplete="off">
     </div>
     <div class="field">
       <label>Categoria</label>
-      <select id="cat">
+      <select id="e-cat" class="entrada">
+        <option value="">Selecione...</option>
+        <option>Patrocínio</option>
+        <option>Venda de Cerveja</option>
+        <option>Venda de Espetinho</option>
+        <option>Venda de Comida</option>
+        <option>Venda de Bebida</option>
+        <option>Inscrições</option>
+        <option>Ingresso / Entrada</option>
+        <option>Outros</option>
+      </select>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label>Quantidade</label>
+        <input type="number" id="e-qtd" value="1" min="1" inputmode="numeric" class="entrada">
+      </div>
+      <div class="field">
+        <label>Valor Unit. (R$)</label>
+        <input type="number" id="e-valor" placeholder="0,00" inputmode="decimal" step="0.01" class="entrada">
+      </div>
+    </div>
+    <button class="btn-entrada" onclick="addItem('e')">+ Registrar Entrada</button>
+  </div>
+
+  <div class="section-title">ENTRADAS REGISTRADAS</div>
+  <div id="lista-e"><div class="empty">Nenhuma entrada ainda</div></div>
+  <button class="btn-limpar" onclick="limpar('e')">🗑 Limpar entradas</button>
+  <div class="pb"></div>
+</div>
+
+<!-- SAÍDAS -->
+<div id="page-saidas" class="page">
+  <div class="form-card saida">
+    <h2>➖ Nova Saída</h2>
+    <div class="field">
+      <label>Descrição</label>
+      <input type="text" id="s-desc" placeholder="Ex: Combustível, inscrição..." class="saida" autocomplete="off">
+    </div>
+    <div class="field">
+      <label>Categoria</label>
+      <select id="s-cat" class="saida">
         <option value="">Selecione...</option>
         <option>Inscrição / Taxa</option>
         <option>Combustível</option>
         <option>Alimentação</option>
         <option>Hospedagem</option>
+        <option>Compra de Estoque (Bar)</option>
         <option>Ferragens / Equipamentos</option>
         <option>Veterinário / Saúde Animal</option>
         <option>Transporte / Frete</option>
@@ -107,118 +191,161 @@ header p{font-size:12px;opacity:.8}
     <div class="row2">
       <div class="field">
         <label>Quantidade</label>
-        <input type="number" id="qtd" value="1" min="1" inputmode="numeric">
+        <input type="number" id="s-qtd" value="1" min="1" inputmode="numeric" class="saida">
       </div>
       <div class="field">
         <label>Valor Unit. (R$)</label>
-        <input type="number" id="valor" placeholder="0,00" inputmode="decimal" step="0.01">
+        <input type="number" id="s-valor" placeholder="0,00" inputmode="decimal" step="0.01" class="saida">
       </div>
     </div>
-    <button class="btn-add" onclick="addItem()">+ Adicionar</button>
+    <button class="btn-saida" onclick="addItem('s')">+ Registrar Saída</button>
   </div>
 
-  <div class="section-title">LANÇAMENTOS</div>
-  <div id="lista"><div class="empty">Nenhum gasto lançado ainda</div></div>
-
-  <button class="btn-limpar" onclick="limparTudo()">🗑 Limpar tudo</button>
+  <div class="section-title">SAÍDAS REGISTRADAS</div>
+  <div id="lista-s"><div class="empty">Nenhuma saída ainda</div></div>
+  <button class="btn-limpar" onclick="limpar('s')">🗑 Limpar saídas</button>
   <div class="pb"></div>
 </div>
 
-<!-- PÁGINA RESUMO -->
+<!-- RESUMO -->
 <div id="page-resumo" class="page">
-  <div class="resumo-card">
-    <h2>Por Categoria</h2>
-    <div id="resumo-lista"><div class="empty">Nenhum gasto ainda</div></div>
+  <div id="resultado-resumo" class="resultado-box lucro">
+    <h3 class="l" id="res-titulo">EQUILÍBRIO</h3>
+    <div class="valor-grande l" id="res-valor">R$ 0,00</div>
+  </div>
+
+  <div class="resumo-card entrada">
+    <h2>💰 Entradas por Categoria</h2>
+    <div id="resumo-e"><div class="empty">Nenhuma entrada ainda</div></div>
+  </div>
+
+  <div class="resumo-card saida">
+    <h2>💸 Saídas por Categoria</h2>
+    <div id="resumo-s"><div class="empty">Nenhuma saída ainda</div></div>
   </div>
   <div class="pb"></div>
 </div>
 
 <script>
-var KEY = 'laco_gastos';
-var gastos = JSON.parse(localStorage.getItem(KEY) || '[]');
+var KEY_E='laco_entradas', KEY_S='laco_saidas';
+var entradas=JSON.parse(localStorage.getItem(KEY_E)||'[]');
+var saidas=JSON.parse(localStorage.getItem(KEY_S)||'[]');
 
 function fmt(v){return 'R$ '+v.toFixed(2).replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,'.')}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function saveE(){localStorage.setItem(KEY_E,JSON.stringify(entradas))}
+function saveS(){localStorage.setItem(KEY_S,JSON.stringify(saidas))}
 
-function save(){localStorage.setItem(KEY,JSON.stringify(gastos))}
+function soma(arr){return arr.reduce(function(s,g){return s+g.qtd*g.valor},0)}
 
-function totalGeral(){return gastos.reduce(function(s,g){return s+g.qtd*g.valor},0)}
+function updateBar(){
+  var te=soma(entradas), ts=soma(saidas), res=te-ts;
+  document.getElementById('total-entrada').textContent=fmt(te);
+  document.getElementById('total-saida').textContent=fmt(ts);
+  var bar=document.getElementById('result-bar');
+  var lbl=document.getElementById('resultado-label');
+  if(res>0){bar.className='result-bar lucro';lbl.textContent='▲ LUCRO '+fmt(res)}
+  else if(res<0){bar.className='result-bar prejuizo';lbl.textContent='▼ DÉFICIT '+fmt(Math.abs(res))}
+  else{bar.className='result-bar lucro';lbl.textContent='EQUILÍBRIO'}
+}
 
-function render(){
-  var lista = document.getElementById('lista');
-  if(gastos.length===0){lista.innerHTML='<div class="empty">Nenhum gasto lançado ainda</div>';document.getElementById('total-geral').textContent='R$ 0,00';renderResumo();return}
+function renderLista(arr, id, tipo){
+  var el=document.getElementById(id);
+  if(arr.length===0){el.innerHTML='<div class="empty">Nenhum registro ainda</div>';return}
   var html='';
-  for(var i=gastos.length-1;i>=0;i--){
-    var g=gastos[i];
-    var tot=g.qtd*g.valor;
+  for(var i=arr.length-1;i>=0;i--){
+    var g=arr[i], tot=g.qtd*g.valor;
     html+='<div class="item-card">'
+      +'<div class="item-stripe '+tipo+'"></div>'
       +'<div class="item-info">'
       +'<div class="item-desc">'+esc(g.desc)+'</div>'
       +'<div class="item-cat">'+esc(g.cat)+(g.qtd>1?' · '+g.qtd+'x '+fmt(g.valor):'')+'</div>'
       +'</div>'
-      +'<div>'
-      +'<div class="item-val">'+fmt(tot)+'</div>'
-      +'</div>'
-      +'<button class="btn-del" onclick="del('+i+')">×</button>'
+      +'<div class="item-val '+tipo+'">'+fmt(tot)+'</div>'
+      +'<button class="btn-del" onclick="del(\''+tipo+'\','+i+')">×</button>'
       +'</div>';
   }
-  lista.innerHTML=html;
-  document.getElementById('total-geral').textContent=fmt(totalGeral());
-  renderResumo();
-}
-
-function renderResumo(){
-  var el=document.getElementById('resumo-lista');
-  if(gastos.length===0){el.innerHTML='<div class="empty">Nenhum gasto ainda</div>';return}
-  var map={};
-  gastos.forEach(function(g){var c=g.cat||'Outros';map[c]=(map[c]||0)+g.qtd*g.valor});
-  var total=totalGeral();
-  var cats=Object.keys(map).sort(function(a,b){return map[b]-map[a]});
-  var html='';
-  cats.forEach(function(c){
-    var pct=total>0?map[c]/total*100:0;
-    html+='<div class="resumo-row">'
-      +'<span class="resumo-cat">'+esc(c)+'</span>'
-      +'<div class="resumo-bar-wrap"><div class="resumo-bar" style="width:'+pct.toFixed(1)+'%"></div></div>'
-      +'<span class="resumo-val">'+fmt(map[c])+'</span>'
-      +'</div>';
-  });
   el.innerHTML=html;
 }
 
-function addItem(){
-  var desc=document.getElementById('desc').value.trim();
-  var cat=document.getElementById('cat').value;
-  var qtd=parseFloat(document.getElementById('qtd').value)||1;
-  var valor=parseFloat(document.getElementById('valor').value);
+function renderResumo(){
+  var te=soma(entradas), ts=soma(saidas), res=te-ts;
+  var box=document.getElementById('resultado-resumo');
+  var tit=document.getElementById('res-titulo');
+  var val=document.getElementById('res-valor');
+  if(res>0){box.className='resultado-box lucro';tit.className='l';tit.textContent='🎉 LUCRO';val.className='valor-grande l';val.textContent=fmt(res)}
+  else if(res<0){box.className='resultado-box prejuizo';tit.className='p';tit.textContent='⚠️ DÉFICIT';val.className='valor-grande p';val.textContent=fmt(Math.abs(res))}
+  else{box.className='resultado-box lucro';tit.className='l';tit.textContent='EQUILÍBRIO';val.className='valor-grande l';val.textContent='R$ 0,00'}
+
+  function buildResumo(arr, elId, tipo, total){
+    var el=document.getElementById(elId);
+    if(arr.length===0){el.innerHTML='<div class="empty">Nenhum registro ainda</div>';return}
+    var map={};
+    arr.forEach(function(g){var c=g.cat||'Outros';map[c]=(map[c]||0)+g.qtd*g.valor});
+    var cats=Object.keys(map).sort(function(a,b){return map[b]-map[a]});
+    var html='';
+    cats.forEach(function(c){
+      var pct=total>0?map[c]/total*100:0;
+      html+='<div class="resumo-row">'
+        +'<span class="resumo-cat">'+esc(c)+'</span>'
+        +'<div class="resumo-bar-wrap"><div class="resumo-bar-'+tipo+'" style="width:'+pct.toFixed(0)+'%"></div></div>'
+        +'<span class="resumo-val '+tipo+'">'+fmt(map[c])+'</span>'
+        +'</div>';
+    });
+    el.innerHTML=html;
+  }
+  buildResumo(entradas,'resumo-e','e',te);
+  buildResumo(saidas,'resumo-s','s',ts);
+}
+
+function render(){
+  renderLista(entradas,'lista-e','e');
+  renderLista(saidas,'lista-s','s');
+  renderResumo();
+  updateBar();
+}
+
+function addItem(tipo){
+  var desc=document.getElementById(tipo+'-desc').value.trim();
+  var cat=document.getElementById(tipo+'-cat').value;
+  var qtd=parseFloat(document.getElementById(tipo+'-qtd').value)||1;
+  var valor=parseFloat(document.getElementById(tipo+'-valor').value);
   if(!desc){alert('Informe a descrição!');return}
   if(!cat){alert('Selecione a categoria!');return}
   if(!valor||valor<=0){alert('Informe o valor!');return}
-  gastos.push({desc:desc,cat:cat,qtd:qtd,valor:valor,dt:new Date().toLocaleDateString('pt-BR')});
-  save();
-  document.getElementById('desc').value='';
-  document.getElementById('valor').value='';
-  document.getElementById('qtd').value='1';
-  document.getElementById('cat').value='';
+  var item={desc:desc,cat:cat,qtd:qtd,valor:valor};
+  if(tipo==='e'){entradas.push(item);saveE()}
+  else{saidas.push(item);saveS()}
+  document.getElementById(tipo+'-desc').value='';
+  document.getElementById(tipo+'-valor').value='';
+  document.getElementById(tipo+'-qtd').value='1';
+  document.getElementById(tipo+'-cat').value='';
   render();
 }
 
-function del(i){
-  if(confirm('Remover este item?')){gastos.splice(i,1);save();render()}
+function del(tipo,i){
+  if(confirm('Remover este item?')){
+    if(tipo==='e'){entradas.splice(i,1);saveE()}
+    else{saidas.splice(i,1);saveS()}
+    render();
+  }
 }
 
-function limparTudo(){
-  if(confirm('Apagar TODOS os lançamentos?')){gastos=[];save();render()}
+function limpar(tipo){
+  if(confirm('Apagar todos os registros?')){
+    if(tipo==='e'){entradas=[];saveE()}
+    else{saidas=[];saveS()}
+    render();
+  }
 }
 
-function showPage(p){
+function showPage(p,btn){
   document.querySelectorAll('.page').forEach(function(el){el.classList.remove('active')});
   document.querySelectorAll('.tab').forEach(function(el){el.classList.remove('active')});
   document.getElementById('page-'+p).classList.add('active');
-  event.target.classList.add('active');
+  btn.classList.add('active');
   if(p==='resumo')renderResumo();
 }
-
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 
 render();
 </script>
